@@ -26,7 +26,7 @@ async function getsongs(folder) {
   let div = document.createElement("div");
   div.innerHTML = responce;
   let as = div.getElementsByTagName("a");
-  console.log(as);
+  //console.log(as);
   songs = [];
   for (let i = 0; i < as.length; i++) {
     const element = as[i];
@@ -53,10 +53,12 @@ async function getsongs(folder) {
 </li>`;
 
   }
-
+  //console.log(document.querySelector(".songlist").getElementsByTagName("li"))
   Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
+    console.log(e);
     e.addEventListener("click", element => {
-      console.log(e.querySelector(".info").firstElementChild.innerHTML)
+      
+      //console.log(e.querySelector(".info").firstElementChild.innerHTML)
       Playmusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
     })
 
@@ -90,12 +92,12 @@ async function displayAlbums() {
 
     if (e.href.includes("/songs/")) {
       console.log(e.href)
-      console.log(e.href.split("/").slice(-1)[0])
-      let folder = e.href.split("/").slice(-1)[0];
-
+      //console.log(e.href.split("/").slice(-1)[0])
+      let folder = e.href.split("/")[4];
+     console.log(folder)
       let a = await fetch(`/songs/${folder}/info.json`)
       let responce = await a.json();
-      console.log(responce);
+      //console.log(responce);
       cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card">
     <div class="play"><svg width="2vw" height="2vw" viewBox="0 0 100 100"
             xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +170,7 @@ async function main() {
     
   })
   next.addEventListener("click", () => {
-    console.log("next was clicked")
+    //console.log("next was clicked")
      currentSong.pause();
     let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
 
@@ -179,7 +181,7 @@ async function main() {
 
 
   document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e) => {
-    console.log("Setting volume to", e.target.value, "/ 100")
+    //console.log("Setting volume to", e.target.value, "/ 100")
     currentSong.volume = parseInt(e.target.value) / 100; 
     if (currentSong.volume >0){
       document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("mute.svg", "volume.svg")
@@ -188,7 +190,7 @@ async function main() {
      
   
   document.querySelector(".volume>img").addEventListener("click", e=>{ 
-    console.log(e.target.src)
+    //console.log(e.target.src)
     if(e.target.src.includes("volume.svg")){
       e.target.src = e.target.src.replace("volume.svg", "mute.svg")
       currentSong.volume = 0;
